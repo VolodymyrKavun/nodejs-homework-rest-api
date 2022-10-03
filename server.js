@@ -5,10 +5,7 @@ app.listen(3000, () => {
   console.log("Server running. Use our API on port: 3000");
 });
 
-const { DB_HOST } = require("./config");
-
-// const DB_HOST =
-//   "mongodb+srv://Volodymyr:e08PVulLZuMuUNd5@cluster0.a1uqqq8.mongodb.net/db-contacts?retryWrites=true&w=majority";
+const { DB_HOST } = process.env;
 
 // Підключення до бази даних
 mongoose
