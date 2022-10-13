@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const Joi = require("joi");
 
-const { handleSaveErrors } = require("../middlewares");
+const { handleSaveErrors } = require("../helpers");
 
 // const isbnPhone = /^\d{3}-\d{3}-\d{4}$/;
 
@@ -21,6 +21,11 @@ const contactSchema = new Schema(
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      require: true,
     },
   },
   { versionKey: false, timestamps: true }
