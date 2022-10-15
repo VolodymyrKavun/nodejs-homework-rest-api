@@ -1,26 +1,8 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const multer = require("multer");
-const path = require("path");
 
 require("dotenv").config();
-
-// повний шлях до файлу
-const tempDir = path.join(__dirname, "temp");
-
-// налаштування для зберігання файлів
-const multerConfig = multer.diskStorage({
-  destination: tempDir,
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-// мідлвара для завантаження файлів
-const upload = multer({
-  storage: multerConfig,
-});
 
 const usersRouter = require("./routes/api/users");
 
@@ -33,12 +15,11 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public")); // шдях до папки "public"
 
 app.use("/api/users", usersRouter);
 
-// upload.fields([{name: "avatar", maxCount: 1}, {name: "subavatar", maxCount: 2}]) - передача в кількох полях файл
-// upload.array("avatar", 8) - кілька файлів в одному полі
-app.use("/api/contacts", upload.single("avatar"), contactsRouter); // передача тільки одного файлу
+app.use("/api/contacts", contactsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
