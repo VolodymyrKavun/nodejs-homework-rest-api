@@ -1,3 +1,4 @@
+// відловлює помилки в контроллерах
 const ctrlWrapper = (ctrl) => {
   const func = async (req, res, next) => {
     try {
